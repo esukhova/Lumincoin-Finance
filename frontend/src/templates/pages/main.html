@@ -1,0 +1,22 @@
+<div class="main-page">
+    <h1 class="mb-4">Главная</h1>
+    <div class="operations-intervals pt-3 d-flex flex-wrap me-2">
+        <button type="button" class="btn btn-outline-secondary me-3 mb-3">Сегодня</button>
+        <button type="button" class="btn btn-outline-secondary me-3 mb-3">Неделя</button>
+        <button type="button" class="btn btn-outline-secondary me-3 mb-3">Месяц</button>
+        <button type="button" class="btn btn-outline-secondary me-3 mb-3">Год</button>
+        <button type="button" class="btn btn-outline-secondary me-3 mb-3">Все</button>
+        <button type="button" class="btn btn-outline-secondary me-3 mb-3">Интервал</button>
+        <div class="d-inline-block fw-medium">с <span class="border-bottom border-1 border-secondary mx-3">Дата</span>
+            по <span class="border-bottom border-1 border-secondary ms-3">Дата</span></div>
+    </div>
+    <div class="charts d-flex flex-column flex-lg-row justify-content-between align-items-center fw-bold">
+        <div class="inner-chart pt-4">
+            <canvas id="chart-income"></canvas>
+        </div>
+        <div class="inner-chart pt-4">
+            <canvas id="chart-expense"></canvas>
+        </div>
+    </div>
+</div>
+<!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->

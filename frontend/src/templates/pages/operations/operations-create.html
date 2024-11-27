@@ -1,0 +1,23 @@
+<div class="operations-create-page form-page">
+    <h1 class="mb-4">Создание дохода/расхода</h1>
+    <form class="form">
+        <select class="form-select" id="select-type">
+            <option class="px-3" value="income">доход</option>
+            <option class="px-3" value="expense">расход</option>
+        </select>
+        <select class="form-select" id="select-category">
+            <option class="px-3" value="income1">доход1</option>
+            <option class="px-3" value="income2">доход2</option>
+            <option class="px-3" value="income3">доход3</option>
+            <option class="px-3" value="income4">доход4</option>
+        </select>
+        <input type="number" class="form-control px-3" id="sum" placeholder="Сумма в $...">
+        <input type="date" class="form-control px-3" id="date" placeholder="Дата...">
+
+        <textarea class="form-control mb-3" id="comment" placeholder="Комментарий..."></textarea>
+        <div class="form-buttons">
+            <button type="button" class="btn btn-success mt-1 me-2">Создать</button>
+            <button type="button" class="btn btn-danger mt-1 me-2">Отмена</button>
+        </div>
+    </form>
+</div>

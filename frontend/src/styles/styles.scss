@@ -1,0 +1,488 @@
+$layout-breakpoint-sm: 576px;
+$layout-breakpoint-md: 768px;
+$layout-breakpoint-lg: 992px;
+$layout-breakpoint-xl: 1200px;
+$layout-breakpoint-xxl: 1400px;
+$layout-breakpoint-xxxl: 1700px;
+
+$color-small-title: #290661;
+$color-title: #052C65;
+
+
+@font-face {
+  src: url("../static/fonts/Roboto-Regular.ttf");
+  font-family: "Roboto";
+  font-weight: 400;
+}
+
+@font-face {
+  src: url("../static/fonts/Roboto-Medium.ttf");
+  font-family: "Roboto";
+  font-weight: 500;
+}
+
+@font-face {
+  src: url("../static/fonts/Roboto-Bold.ttf");
+  font-family: "Roboto";
+  font-weight: 700;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  color: $color-title;
+  font-size: 0;
+}
+
+.invalid-feedback {
+  font-size: 12px;
+}
+
+h1 {
+  font-size: 24px;
+  @media (min-width: $layout-breakpoint-md) {
+    font-size: 32px;
+  }
+  @media (min-width: $layout-breakpoint-lg) {
+    font-size: 40px;
+  }
+}
+
+.btn.card-btn {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px;
+  @media (min-width: $layout-breakpoint-lg) {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+}
+
+select {
+  margin-bottom: 10px;
+  option {
+    width: 100%;
+  }
+}
+
+input {
+  margin-bottom: 10px;
+}
+
+textarea {
+  resize: none;
+  height: 1rem;
+}
+
+.operations-intervals {
+  color: #000;
+  font-size: 16px;
+
+  .btn {
+    width: 100px;
+    font-size: 16px;
+    padding: 5px 16px;
+  }
+
+  span {
+    color: #6C757D;
+  }
+}
+
+.form, .form-control, .form-select {
+  font-size: 15px;
+  width: 100%;
+  @media (min-width: $layout-breakpoint-md) {
+    width: 397px;
+  }
+}
+
+.modal {
+  .modal-content {
+    border-radius: 12px;
+  }
+
+  .modal-dialog {
+    @media (min-width: $layout-breakpoint-lg) {
+      min-width: 530px;
+    }
+  }
+
+  .modal-title {
+    font-size: 14px;
+    @media (min-width: $layout-breakpoint-md) {
+      font-size: 20px;
+    }
+  }
+
+  .btn {
+    font-size: 12px;
+    @media (min-width: $layout-breakpoint-sm) {
+      font-size: 14px;
+    } 
+  }
+}
+
+.main-page {
+  .btn {
+    width: 100px;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 5px 16px;
+  }
+
+  .charts {
+    width: 95%;
+    margin: 20px 0;
+    @media (min-width: $layout-breakpoint-xxl) {
+      margin: 116px 0;
+    }
+    @media (min-width: $layout-breakpoint-xxxl) {
+      width: 65%;
+    }
+  }
+
+  .inner-chart {
+    width: 80vw;
+    @media (min-width: $layout-breakpoint-sm) {
+      width: 60vw;
+    }
+    @media (min-width: $layout-breakpoint-xl) {
+      width: 460px;
+    }
+  }
+}
+
+
+//LAYOUT
+
+#burger {
+  $toggleSize: 35px;
+  $toggleMargin: 10px;
+  $toggleLine: 4px;
+  $offset: $toggleSize * 0.5;
+  position: relative;
+  width: $toggleSize;
+  height: $toggleSize;
+  margin: $toggleMargin;
+  z-index: 3;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    top: calc($offset - $toggleLine / 2);
+    left: 0;
+    transform: translate(0, 0);
+    width: 100%;
+    height: $toggleLine;
+    background: $color-title;
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+
+  &:before {
+    box-shadow: 0 calc($offset / 1.5) 0 0 $color-title;;
+  }
+
+  &:after {
+    box-shadow: 0 calc(-1 * ($offset / 1.5)) 0 0 $color-title;;
+  }
+
+  &.active {
+    &:before, &:after {
+      box-shadow: none;
+    }
+
+    &:before {
+      transform: rotate(-45deg);
+    }
+
+    &:after {
+      transform: rotate(45deg);
+    }
+  }
+}
+
+#sidebar-layout {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  transform: translate(-150%, 0);
+  transition: all .3s ease;
+  background-color: white;
+  font-size: 20px;
+  width: 85vw;
+  padding: 20px 0;
+  @media (min-width: $layout-breakpoint-md) {
+    width: 50vw;
+  }
+
+  &.active {
+    transform: translate(0, 0);
+  }
+
+  > a, > ul, > div {
+    padding: 20px;
+  }
+
+  a {
+    color: $color-title;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  #logo {
+    height: 40px;
+    display: none;
+  }
+
+  .nav-link {
+    padding: 10px 11px 10px 16px;
+    color: $color-title;
+
+    svg {
+      fill: $color-title;
+    }
+
+    &:hover, &:active, &:focus {
+      color: #fff;
+      background-color: #0D6EFD;
+
+      svg {
+        fill: #fff;
+      }
+    }
+  }
+
+  .accordion {
+
+    .accordion-item {
+      border: 1px solid #0D6EFD;
+
+      &:has(.accordion-button.collapsed) {
+        border: none;
+      }
+
+      .nav-link {
+        border-radius: 0;
+        color: #0D6EFD;
+
+        &:focus, &:hover, &:active {
+          background-color: #0D6EFD;
+          color: #fff;
+        }
+      }
+
+      .accordion-button {
+        padding: 10px 16px;
+        font-size: 20px;
+        @media (min-width: $layout-breakpoint-lg) {
+          font-size: 14px;
+        }
+
+        &::after {
+          background-image: none;
+          display: none;
+        }
+
+        &:focus {
+          box-shadow: none;
+        }
+
+        &:hover, &.active {
+          color: #fff;
+          background-color: #0D6EFD;
+        }
+
+        svg {
+          transition: all 0.1s;
+          margin-left: auto;
+        }
+
+        &:not(.collapsed) {
+          background-color: #0D6EFD;
+          color: #fff;
+
+          svg {
+            transform: rotate(90deg);
+          }
+        }
+      }
+    }
+  }
+
+  #balance span {
+    color: #0D6EFD;
+  }
+}
+
+@media (min-width: $layout-breakpoint-lg) {
+  .header, #burger, #logo-header {
+    display: none;
+  }
+  #sidebar-layout {
+    transform: translate(0, 0);
+    position: relative;
+    width: 220px;
+    height: 100vh;
+    font-size: 14px;
+
+    #logo {
+      display: block;
+    }
+  }
+}
+
+.content-layout {
+  padding: 15px;
+  width: 100vw;
+  @media (min-width: $layout-breakpoint-lg) {
+    padding: 100px 60px;
+  }
+}
+
+.login-page, .signup-page {
+  height: 100vh;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  form {
+    width: 100%;
+    @media (min-width: $layout-breakpoint-md) {
+      width: 397px;
+    }
+
+
+    .input-group, .btn {
+      margin-bottom: 10px;
+    }
+
+    .form-control {
+      font-size: 15px;
+    }
+
+    .input-group-text {
+      width: 38px;
+    }
+
+    .form-check-input {
+      width: 13px;
+      height: 13px;
+    }
+
+    .btn {
+      font-size: 15px;
+    }
+  }
+}
+
+
+.category-page {
+  .cards {
+    padding: 0 -16px;
+    .card {
+      padding: 8px;
+      border-radius: 8px;
+      min-height: 100%;
+      @media (min-width: $layout-breakpoint-md) {
+        padding: 20px;
+        border-radius: 12px;
+      }
+
+      &.card-plus {
+        height: auto;
+        padding: 0;
+
+        a {
+          flex: 1 0 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 28px;
+          color: #CED4DA;
+          text-decoration: none;
+          width: 100%;
+          min-height: 100%;
+
+        }
+      }
+
+      .card-body {
+        padding: 0;
+      }
+
+      .card-title {
+        font-size: 14px;
+        margin-bottom: 10px;
+        color: $color-small-title;
+        @media (min-width: $layout-breakpoint-sm) {
+          font-size: 20px;
+        }
+        @media (min-width: $layout-breakpoint-md) {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+}
+
+.operations-page {
+  font-size: 12px;
+  @media (min-width: $layout-breakpoint-md) {
+    font-size: 16px;
+  }
+
+  .operations-buttons {
+    .btn {
+      font-size: 14px;
+    }
+  }
+
+  .operations-table-wrapper {
+    padding: -20px;
+  }
+
+  th {
+    color: $color-title;
+    vertical-align: middle;
+    padding: 12px 4px;
+  }
+
+  td {
+    padding: 12px 4px;
+  }
+
+  tr, th[scope="row"] {
+    color: black;
+  }
+
+  table {
+
+    svg {
+      fill: black;
+
+    }
+  }
+}
+
+.form-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: $layout-breakpoint-lg) {
+    align-items: start;
+  }
+}
