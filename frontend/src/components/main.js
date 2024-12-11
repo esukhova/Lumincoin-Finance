@@ -1,10 +1,19 @@
 import Chart from "chart.js/auto";
+import {AuthUtils} from "../utils/auth-utils";
 
 
 export class Main {
-    constructor() {
-        console.log('Main');
+    constructor(openNewRoute) {
+
+        this.openNewRoute = openNewRoute;
+        //Исправить
+        if (!AuthUtils.getAuthInfo(AuthUtils.accessTokenKey) || !AuthUtils.getAuthInfo(AuthUtils.refreshTokenKey)) {
+            return this.openNewRoute('/login');
+        }
+        //
         this.getCharts();
+
+        document.getElementsByClassName('header')[0].style.display ='flex';
     }
 
     getCharts() {

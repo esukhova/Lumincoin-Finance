@@ -1,13 +1,18 @@
+import {AuthUtils} from "../../utils/auth-utils";
+import {HttpUtils} from "../../utils/http-utils";
+
 export class SignUp {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
 
-        if (localStorage.getItem('accessToken')) {
+        if (AuthUtils.getAuthInfo(AuthUtils.accessTokenKey)) {
             return this.openNewRoute('/');
         }
 
         this.passwordElement = document.getElementById('password');
         this.commonErrorElement = document.getElementById('common-error');
+
+        document.getElementsByClassName('header')[0].style.display = 'none';
 
         document.getElementById('process-button').addEventListener('click', this.signUp.bind(this));
 
@@ -53,7 +58,7 @@ export class SignUp {
 
     validateField(field, element) {
         if (field.name === 'repeat-password') {
-            if (element.value === this.passwordElement.value) {
+            if (element.value && element.value === this.passwordElement.value) {
                 element.classList.remove('is-invalid');
                 field.valid = true;
             } else {
@@ -67,7 +72,6 @@ export class SignUp {
             element.classList.add('is-invalid');
             field.valid = false;
         }
-        this.validateForm();
     }
 
     validateForm() {
@@ -78,30 +82,19 @@ export class SignUp {
         this.commonErrorElement.style.display = 'none';
 
         if (this.validateForm()) {
-            const response = await fetch('http://localhost:3000/api/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: this.fields.find(item => item.name === 'fio').element.value.split(' ').slice(1).join(' '),
-                    lastName: this.fields.find(item => item.name === 'fio').element.value.split(' ', 1)[0],
-                    email: this.fields.find(item => item.name === 'email').element.value,
-                    password: this.fields.find(item => item.name === 'password').element.value,
-                    passwordRepeat: this.fields.find(item => item.name === 'repeat-password').element.value,
-                })
 
+            const result = await HttpUtils.request('/signup', 'POST', false,{
+                name: this.fields.find(item => item.name === 'fio').element.value.split(' ').slice(1).join(' '),
+                lastName: this.fields.find(item => item.name === 'fio').element.value.split(' ', 1)[0],
+                email: this.fields.find(item => item.name === 'email').element.value,
+                password: this.fields.find(item => item.name === 'password').element.value,
+                passwordRepeat: this.fields.find(item => item.name === 'repeat-password').element.value,
             });
 
-            const result = await response.json();
-
-            if (result.error || !result.user) {
+            if (result.error || !result.response || (result.response && !result.response.user)) {
                 this.commonErrorElement.style.display = 'block';
                 return;
             }
-
-            localStorage.setItem('user', JSON.stringify({id: result.user.id, name: result.user.name, lastName: result.user.lastName, email: result.user.email}));
 
             this.openNewRoute('/login');
 
