@@ -1,5 +1,5 @@
-import config from "../config/config";
 import {AuthUtils} from "./auth-utils";
+import config from "../config/config";
 
 export class HttpUtils {
     static async request(url, method = 'GET', useAuth = true, body = null) {
@@ -13,18 +13,20 @@ export class HttpUtils {
             headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json',
-            },
+            }
         }
-        if (body) {
-            params.body = JSON.stringify(body);
-        };
 
         let token = null;
+
         if (useAuth) {
             token = AuthUtils.getAuthInfo(AuthUtils.accessTokenKey);
             if (token) {
-                params.headers['authorization'] = token;
+                params.headers['x-auth-token'] = token;
             }
+        }
+
+        if (body) {
+            params.body = JSON.stringify(body);
         }
 
         let response = null;
@@ -37,14 +39,14 @@ export class HttpUtils {
             return result;
         }
 
-        if (response.status >= 300 || response.status < 200) {
+        if (response.status < 200 || response.status >= 300) {
             result.error = true;
             if (useAuth && response.status === 401) {
                 if (!token) {
-                    //1 - токена нет
+                    // 1 - токена нет
                     result.redirect = '/login';
                 } else {
-                    //2 - токена устарел/невалидный (надо обновить)
+                    // 2 - токен устарел/невалидный (нужно обновить)
                     const updateTokenResult = await AuthUtils.updateRefreshToken();
                     if (updateTokenResult) {
                         //запрос повторно
@@ -53,8 +55,11 @@ export class HttpUtils {
                         result.redirect = '/login';
                     }
                 }
+
+
             }
         }
+
         return result;
     }
 }

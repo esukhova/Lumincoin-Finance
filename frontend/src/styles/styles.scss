@@ -32,6 +32,7 @@ $color-title: #052C65;
 }
 
 body {
+  min-height: 100%;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   color: $color-title;
@@ -63,15 +64,14 @@ h1 {
 
 }
 
-select {
-  margin-bottom: 10px;
-  option {
-    width: 100%;
-  }
-}
+.form-page {
+  select, input {
+    margin-bottom: 10px;
 
-input {
-  margin-bottom: 10px;
+    option {
+      width: 100%;
+    }
+  }
 }
 
 textarea {
@@ -124,7 +124,7 @@ textarea {
     font-size: 12px;
     @media (min-width: $layout-breakpoint-sm) {
       font-size: 14px;
-    } 
+    }
   }
 }
 
@@ -137,20 +137,20 @@ textarea {
   }
 
   .charts {
-    width: 95%;
     margin: 20px 0;
+    justify-content: space-between;
     @media (min-width: $layout-breakpoint-xxl) {
       margin: 116px 0;
     }
     @media (min-width: $layout-breakpoint-xxxl) {
-      width: 65%;
+      justify-content: space-evenly;
     }
   }
 
   .inner-chart {
     width: 80vw;
     @media (min-width: $layout-breakpoint-sm) {
-      width: 60vw;
+      width: 50%;
     }
     @media (min-width: $layout-breakpoint-xl) {
       width: 460px;
@@ -170,7 +170,7 @@ textarea {
   width: $toggleSize;
   height: $toggleSize;
   margin: $toggleMargin;
-  z-index: 3;
+  z-index: 3001;
 
   &:hover {
     cursor: pointer;
@@ -211,22 +211,14 @@ textarea {
   }
 }
 
-#sidebar-layout {
-  position: absolute;
-  top: 0;
-  z-index: 2;
-  transform: translate(-150%, 0);
-  transition: all .3s ease;
+.offcanvas#sidebar-layout {
+  z-index: 3000;
   background-color: white;
   font-size: 20px;
   width: 85vw;
   padding: 20px 0;
   @media (min-width: $layout-breakpoint-md) {
     width: 50vw;
-  }
-
-  &.active {
-    transform: translate(0, 0);
   }
 
   > a, > ul, > div {
@@ -261,6 +253,16 @@ textarea {
       svg {
         fill: #fff;
       }
+    }
+  }
+
+  .dropdown-toggle {
+    white-space: wrap;
+
+    &:after {
+      cursor: pointer;
+      height: 100%;
+      margin: 10px;
     }
   }
 
@@ -326,15 +328,21 @@ textarea {
   }
 }
 
+.header {
+  display: flex;
+}
+
 @media (min-width: $layout-breakpoint-lg) {
   .header, #burger, #logo-header {
     display: none;
   }
-  #sidebar-layout {
-    transform: translate(0, 0);
+  .offcanvas#sidebar-layout.offcanvas-start {
+    visibility: visible;
+    transform: none;
     position: relative;
     width: 220px;
-    height: 100vh;
+    min-width: 220px;
+    min-height: 100vh;
     font-size: 14px;
 
     #logo {
@@ -345,7 +353,6 @@ textarea {
 
 .content-layout {
   padding: 15px;
-  width: 100vw;
   @media (min-width: $layout-breakpoint-lg) {
     padding: 100px 60px;
   }
@@ -359,7 +366,7 @@ textarea {
   justify-content: center;
 
   form {
-    width: 100%;
+    width: 75vw;
     @media (min-width: $layout-breakpoint-md) {
       width: 397px;
     }
@@ -392,6 +399,7 @@ textarea {
 .category-page {
   .cards {
     padding: 0 -16px;
+
     .card {
       padding: 8px;
       border-radius: 8px;
@@ -461,7 +469,7 @@ textarea {
   }
 
   td {
-    padding: 12px 4px;
+    padding: 12px;
   }
 
   tr, th[scope="row"] {

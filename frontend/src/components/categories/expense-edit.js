@@ -1,9 +1,14 @@
-export class ExpenseEdit {
-    constructor() {
-        console.log(1);
-    }
+import {AuthUtils} from "../../utils/auth-utils";
 
-    async getExpense() {
+export class ExpenseEdit {
+    constructor(openNewRoute) {
+        this.openNewRoute = openNewRoute;
+
+        //Исправить
+        if (!AuthUtils.getAuthInfo(AuthUtils.accessTokenKey) || !AuthUtils.getAuthInfo(AuthUtils.refreshTokenKey)) {
+            return this.openNewRoute('/login');
+        }
+        //
 
     }
 }

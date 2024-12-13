@@ -1,5 +1,5 @@
-<div class="d-flex flex-column flex-shrink-0 border border-secondary-subtle vh-100" id="sidebar-layout">
-    <a href="javascript:void(0);"
+<div class="offcanvas offcanvas-start -flex flex-column border border-secondary-subtle" tabindex="-1" id="sidebar-layout" aria-labelledby="offcanvasExampleLabel">
+    <a href="/"
        class="d-flex align-items-center text-center justify-content-center text-decoration-none border-bottom border-secondary-subtle">
         <img src="/static/images/logo.png" alt="Логотип" id="logo">
     </a>
@@ -48,14 +48,14 @@
     <div id="balance" class="fw-medium">Баланс:&nbsp;<span id="balance-span"> 500$</span></div>
     <hr class="m-0">
     <div class="dropdown">
-        <a href="/" class="d-flex align-items-center text-decoration-none dropdown-toggle"
+        <div class="d-flex align-items-center text-decoration-none dropdown-toggle"
            data-bs-toggle="dropdown" aria-expanded="false">
             <img src="/static/images/user.png" alt="Пользователь" width="32" height="32" class="rounded-circle me-2">
-            <span>Пользователь</span>
-        </a>
-        <ul class="dropdown-menu text-small shadow">
+            <span id="user-name">Пользователь</span>
+        </div>
+        <ul class="dropdown-menu text-small shadow m-2">
             <li><a class="dropdown-item" href="/logout">Выйти</a></li>
         </ul>
     </div>
 </div>
-<div class="content-layout w-100" id="content-layout"></div>
+<div class="content-layout flex-grow-1" id="content-layout"></div>
