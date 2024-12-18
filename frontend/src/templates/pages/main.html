@@ -1,14 +1,16 @@
 <div class="main-page">
     <h1 class="mb-4">Главная</h1>
-    <div class="operations-intervals pt-3 d-flex flex-wrap me-2">
-        <button type="button" class="btn btn-outline-secondary me-3 mb-3">Сегодня</button>
-        <button type="button" class="btn btn-outline-secondary me-3 mb-3">Неделя</button>
-        <button type="button" class="btn btn-outline-secondary me-3 mb-3">Месяц</button>
-        <button type="button" class="btn btn-outline-secondary me-3 mb-3">Год</button>
-        <button type="button" class="btn btn-outline-secondary me-3 mb-3">Все</button>
-        <button type="button" class="btn btn-outline-secondary me-3 mb-3">Интервал</button>
-        <div class="d-inline-block fw-medium">с <span class="border-bottom border-1 border-secondary mx-3">Дата</span>
-            по <span class="border-bottom border-1 border-secondary ms-3">Дата</span></div>
+    <div class="operations-intervals pt-3 d-flex flex-wrap mb-3 row gy-3" id="operations-intervals">
+        <button type="button" class="operations-interval btn btn-outline-secondary me-3" id="today-btn">Сегодня</button>
+        <button type="button" class="operations-interval btn btn-outline-secondary me-3" id="week-btn">Неделя</button>
+        <button type="button" class="operations-interval btn btn-outline-secondary me-3" id="month-btn">Месяц</button>
+        <button type="button" class="operations-interval btn btn-outline-secondary me-3" id="year-btn">Год</button>
+        <button type="button" class="operations-interval btn btn-outline-secondary me-3 active" id="all-btn">Все</button>
+        <button type="button" class="operations-interval btn btn-outline-secondary me-3" id="interval-btn">Интервал</button>
+        <div class="d-inline-flex align-items-center gap-2 fw-medium">
+            с <input type="text" id="from-interval" class="ms-3" size="8" placeholder="Дата">
+            по <input type="text" id="to-interval" class="ms-3" size="8" placeholder="Дата">
+        </div>
     </div>
     <div class="charts d-flex flex-column flex-lg-row align-items-center fw-bold">
         <div class="inner-chart pt-4">
