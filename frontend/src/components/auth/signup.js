@@ -1,5 +1,5 @@
 import {AuthUtils} from "../../utils/auth-utils";
-import {HttpUtils} from "../../utils/http-utils";
+import {AuthService} from "../../services/auth-service";
 
 export class SignUp {
     constructor(openNewRoute) {
@@ -83,7 +83,7 @@ export class SignUp {
 
         if (this.validateForm()) {
 
-            const result = await HttpUtils.request('/signup', 'POST', false,{
+            const signupResult = await AuthService.signUp({
                 name: this.fields.find(item => item.name === 'fio').element.value.split(' ').slice(1).join(' '),
                 lastName: this.fields.find(item => item.name === 'fio').element.value.split(' ', 1)[0],
                 email: this.fields.find(item => item.name === 'email').element.value,
@@ -91,12 +91,11 @@ export class SignUp {
                 passwordRepeat: this.fields.find(item => item.name === 'repeat-password').element.value,
             });
 
-            if (result.error || !result.response || (result.response && !result.response.user)) {
-                this.commonErrorElement.style.display = 'block';
-                return;
+            if (signupResult) {
+                return this.openNewRoute('/login');
             }
 
-            this.openNewRoute('/login');
+            this.commonErrorElement.style.display = 'block';
 
         } else {
             this.fields.forEach(item => {

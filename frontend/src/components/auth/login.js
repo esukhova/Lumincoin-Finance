@@ -1,5 +1,5 @@
 import {AuthUtils} from "../../utils/auth-utils";
-import {HttpUtils} from "../../utils/http-utils";
+import {AuthService} from "../../services/auth-service";
 
 export class Login {
 
@@ -63,21 +63,20 @@ export class Login {
 
         if (this.validateForm()) {
 
-            const result = await HttpUtils.request('/login', 'POST', false, {
+            const loginResult = await AuthService.logIn({
                 email: this.fields.find(item => item.name === 'email').element.value,
                 password: this.fields.find(item => item.name === 'password').element.value,
                 rememberMe: this.rememberMeElement.checked
             });
 
-            if (result.error || !result.response || (result.response && (!result.response.tokens || !result.response.user))) {
-                this.commonErrorElement.style.display = 'block';
-                return;
+            if (loginResult) {
+                AuthUtils.setAuthInfo(loginResult.tokens.accessToken, loginResult.tokens.refreshToken,
+                    {id: loginResult.user.id, name: loginResult.user.name, lastName: loginResult.user.lastName});
+
+                return this.openNewRoute('/');
             }
 
-            AuthUtils.setAuthInfo(result.response.tokens.accessToken, result.response.tokens.refreshToken,
-                {id: result.response.user.id, name: result.response.user.name, lastName: result.response.user.lastName})
-
-            this.openNewRoute('/');
+            this.commonErrorElement.style.display = 'block';
 
         } else {
             this.fields.forEach(item => {

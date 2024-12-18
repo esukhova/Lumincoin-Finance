@@ -8,7 +8,6 @@ $layout-breakpoint-xxxl: 1700px;
 $color-small-title: #290661;
 $color-title: #052C65;
 
-
 @font-face {
   src: url("../static/fonts/Roboto-Regular.ttf");
   font-family: "Roboto";
@@ -53,6 +52,41 @@ h1 {
   }
 }
 
+#amount-div {
+  outline: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.ui-datepicker.ui-widget {
+  z-index: 1000;
+  font-size: 16px;
+
+
+  .ui-corner-all {
+    cursor: pointer;
+  }
+
+  .ui-icon.ui-icon-circle-triangle-w, .ui-icon.ui-icon-circle-triangle-e {
+    background-image: url("../static/images/next.png");
+    background-position: center;
+    background-size: contain;
+    transform: rotate(180deg);
+  }
+
+  .ui-icon.ui-icon-circle-triangle-e {
+    transform: rotate(0);
+  }
+}
+
+
 .btn.card-btn {
   font-size: 12px;
   font-weight: 500;
@@ -65,8 +99,16 @@ h1 {
 }
 
 .form-page {
-  select, input {
-    margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: $layout-breakpoint-lg) {
+    align-items: start;
+  }
+
+  .form-select:not(:first-child), .form-control {
+    margin-top: 10px;
 
     option {
       width: 100%;
@@ -82,6 +124,15 @@ textarea {
 .operations-intervals {
   color: #000;
   font-size: 16px;
+  width: auto;
+
+  input.hasDatepicker {
+    outline: none;
+    border: none;
+    text-decoration: underline;
+    margin: 0;
+    cursor: pointer;
+  }
 
   .btn {
     width: 100px;
@@ -170,7 +221,7 @@ textarea {
   width: $toggleSize;
   height: $toggleSize;
   margin: $toggleMargin;
-  z-index: 3001;
+  z-index: 1001;
 
   &:hover {
     cursor: pointer;
@@ -212,7 +263,7 @@ textarea {
 }
 
 .offcanvas#sidebar-layout {
-  z-index: 3000;
+  z-index: 1000;
   background-color: white;
   font-size: 20px;
   width: 85vw;
@@ -225,12 +276,8 @@ textarea {
     padding: 20px;
   }
 
-  a {
-    color: $color-title;
-
-    &::after {
-      display: none;
-    }
+  a::after {
+    display: none;
   }
 
   #logo {
@@ -246,7 +293,7 @@ textarea {
       fill: $color-title;
     }
 
-    &:hover, &:active, &:focus {
+    &:hover, &:active, &:focus, &.active {
       color: #fff;
       background-color: #0D6EFD;
 
@@ -279,7 +326,7 @@ textarea {
         border-radius: 0;
         color: #0D6EFD;
 
-        &:focus, &:hover, &:active {
+        &:focus, &:hover, &:active, &.active {
           background-color: #0D6EFD;
           color: #fff;
         }
@@ -323,10 +370,18 @@ textarea {
     }
   }
 
-  #balance span {
-    color: #0D6EFD;
+  #balance {
+    cursor: pointer;
+    span {
+      color: #0D6EFD;
+    }
   }
 }
+
+.offcanvas-backdrop.fade {
+  z-index: 500;
+}
+
 
 .header {
   display: flex;
@@ -409,9 +464,10 @@ textarea {
         border-radius: 12px;
       }
 
-      &.card-plus {
+      &#card-plus {
         height: auto;
         padding: 0;
+        font-size: 28px;
 
         a {
           flex: 1 0 100%;
@@ -442,6 +498,16 @@ textarea {
           font-size: 28px;
         }
       }
+
+      .card-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        @media (min-width: $layout-breakpoint-md) {
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+      }
     }
   }
 }
@@ -460,6 +526,7 @@ textarea {
 
   .operations-table-wrapper {
     padding: -20px;
+    width: 100%;
   }
 
   th {
@@ -470,6 +537,10 @@ textarea {
 
   td {
     padding: 12px;
+
+    &:last-child {
+      padding-right: 0;
+    }
   }
 
   tr, th[scope="row"] {
@@ -477,20 +548,12 @@ textarea {
   }
 
   table {
-
+    td {
+      vertical-align: middle;
+    }
     svg {
       fill: black;
 
     }
-  }
-}
-
-.form-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  @media (min-width: $layout-breakpoint-lg) {
-    align-items: start;
   }
 }
