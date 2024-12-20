@@ -44,7 +44,7 @@ module.exports = {
                 { from: "./src/styles/libs", to: "css" },
                 { from: "./src/components/libs", to: "js" },
                 { from: "./src/static/fonts", to: "static/fonts" },
-                { from: "./.env", to: "./" },
+                // { from: "./.env", to: "./" },
             ],
         }),
     ],

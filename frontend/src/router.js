@@ -12,7 +12,6 @@ import {Logout} from "./components/auth/logout";
 import {FileUtils} from "./utils/file-utils";
 import {OperationsDelete} from "./components/operations/operations-delete";
 import {CategoriesDelete} from "./components/categories/categories-delete";
-import {BalanceUpdate} from "./components/balance-update";
 import {AuthUtils} from "./utils/auth-utils";
 
 export class Router {
@@ -174,13 +173,6 @@ export class Router {
                     new CategoriesDelete(this.openNewRoute.bind(this), 'income');
                 }
             },
-            {
-                route: '/balance',
-                load: () => {
-                    new BalanceUpdate(this.openNewRoute.bind(this));
-                }
-            },
-
         ]
     }
 

@@ -18,6 +18,11 @@ export class Main {
 
         this.getIntervals();
 
+        const datePicker = document.getElementById('ui-datepicker-div');
+
+        if (datePicker) {
+            datePicker.remove();
+        }
 
         $('#from-interval').datepicker();
         $('#to-interval').datepicker();
@@ -168,10 +173,10 @@ export class Main {
             },
         };
 
-        if(Chart.getChart("chart-income")) {
+        if (Chart.getChart("chart-income")) {
             Chart.getChart("chart-income")?.destroy();
         }
-        if(Chart.getChart("chart-expense")) {
+        if (Chart.getChart("chart-expense")) {
             Chart.getChart("chart-expense")?.destroy();
         }
 
@@ -184,7 +189,7 @@ export class Main {
 
         options.plugins.title.text = 'Расходы';
 
-       const chartExpense = new Chart(document.getElementById('chart-expense'), {
+        const chartExpense = new Chart(document.getElementById('chart-expense'), {
             type: 'pie',
             data: dataExpense,
             options: options

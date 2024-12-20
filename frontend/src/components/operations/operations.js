@@ -14,6 +14,12 @@ export class Operations {
 
         this.getIntervals();
 
+        const datePicker = document.getElementById('ui-datepicker-div');
+
+        if (datePicker) {
+            datePicker.remove();
+        }
+
         $('#from-interval').datepicker();
         $('#to-interval').datepicker();
 

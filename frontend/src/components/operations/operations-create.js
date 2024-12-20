@@ -24,6 +24,12 @@ export class OperationsCreate {
         this.dateElement = document.getElementById('date');
         this.commentElement = document.getElementById('comment');
 
+        const datePicker = document.getElementById('ui-datepicker-div');
+
+        if (datePicker) {
+            datePicker.remove();
+        }
+
         $('#date').datepicker();
 
         this.defaultFill(this.type).then();
