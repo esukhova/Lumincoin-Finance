@@ -1,5 +1,9 @@
+// const host = process.env.HOST;
+const host = 'http://localhost:3000';
+
 const config = {
-    api: 'http://localhost:3000/api'
+    host: host,
+    api: host + '/api'
 }
 
 export default config;

@@ -2,16 +2,17 @@ import {Main} from "./components/main";
 import {SignUp} from "./components/auth/signup";
 import {Login} from "./components/auth/login";
 import {Operations} from "./components/operations/operations";
-import {Income} from "./components/categories/income";
-import {Expense} from "./components/categories/expense";
-import {ExpenseEdit} from "./components/categories/expense-edit";
-import {ExpenseCreate} from "./components/categories/expense-create";
+import {Categories} from "./components/categories/categories";
+import {CategoriesEdit} from "./components/categories/categories-edit";
+import {CategoriesCreate} from "./components/categories/categories-create";
 import {OperationsCreate} from "./components/operations/operations-create";
 import {OperationsEdit} from "./components/operations/operations-edit";
 import {Layout} from "./components/layout";
-import {IncomeEdit} from "./components/categories/income-edit";
-import {IncomeCreate} from "./components/categories/income-create";
 import {Logout} from "./components/auth/logout";
+import {FileUtils} from "./utils/file-utils";
+import {OperationsDelete} from "./components/operations/operations-delete";
+import {CategoriesDelete} from "./components/categories/categories-delete";
+import {AuthUtils} from "./utils/auth-utils";
 
 export class Router {
     constructor() {
@@ -19,6 +20,7 @@ export class Router {
         this.titlePageElement = document.getElementById('title');
         this.contentPageElement = document.getElementById('content');
         this.firstScriptElement = document.getElementById('firstScriptElement');
+        this.userName = null;
 
         this.initEvents();
         this.routes = [
@@ -27,9 +29,11 @@ export class Router {
                 title: 'Главная',
                 filePathTemplate: '/templates/pages/main.html',
                 useLayout: '/templates/layout.html',
+                styles: ['jquery-ui.min.css'],
+                scripts: ['jquery-3.7.1.min.js', 'jquery-ui.min.js'],
                 load: () => {
                     new Main(this.openNewRoute.bind(this));
-                    new Layout();
+
                 }
             },
             {
@@ -69,9 +73,10 @@ export class Router {
                 title: 'Доходы и расходы',
                 filePathTemplate: '/templates/pages/operations/operations.html',
                 useLayout: '/templates/layout.html',
+                styles: ['jquery-ui.min.css'],
+                scripts: ['jquery-3.7.1.min.js', 'jquery-ui.min.js'],
                 load: () => {
                     new Operations(this.openNewRoute.bind(this));
-                    new Layout();
                 }
             },
             {
@@ -79,9 +84,10 @@ export class Router {
                 title: 'Создание дохода/расхода',
                 filePathTemplate: '/templates/pages/operations/operations-create.html',
                 useLayout: '/templates/layout.html',
+                styles: ['jquery-ui.min.css'],
+                scripts: ['jquery-3.7.1.min.js', 'jquery-ui.min.js'],
                 load: () => {
                     new OperationsCreate(this.openNewRoute.bind(this));
-                    new Layout();
                 }
             },
             {
@@ -89,19 +95,16 @@ export class Router {
                 title: 'Редактирование дохода/расхода',
                 filePathTemplate: '/templates/pages/operations/operations-edit.html',
                 useLayout: '/templates/layout.html',
+                styles: ['jquery-ui.min.css'],
+                scripts: ['jquery-3.7.1.min.js', 'jquery-ui.min.js'],
                 load: () => {
                     new OperationsEdit(this.openNewRoute.bind(this));
-                    new Layout();
                 }
             },
             {
-                route: '/categories/income',
-                title: 'Доходы',
-                filePathTemplate: '/templates/pages/categories/income.html',
-                useLayout: '/templates/layout.html',
+                route: '/operations/delete',
                 load: () => {
-                    new Income(this.openNewRoute.bind(this));
-                    new Layout();
+                    new OperationsDelete(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -110,52 +113,66 @@ export class Router {
                 filePathTemplate: '/templates/pages/categories/expense.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Expense(this.openNewRoute.bind(this));
-                    new Layout();
+                    new Categories(this.openNewRoute.bind(this), 'expense');
                 }
             },
-            // {
-            //     route: '/categories/expense/edit',
-            //     title: 'Редактирование категории расходов',
-            //     filePathTemplate: '/templates/pages/categories/expense-edit.html',
-            //     useLayout: '/templates/layout.html',
-            //     load: () => {
-            //         new ExpenseEdit();
-            //         new Layout();
-            //     }
-            // },
+            {
+                route: '/categories/expense/edit',
+                title: 'Редактирование категории расходов',
+                filePathTemplate: '/templates/pages/categories/expense-edit.html',
+                useLayout: '/templates/layout.html',
+                load: () => {
+                    new CategoriesEdit(this.openNewRoute.bind(this), 'expense');
+                }
+            },
             {
                 route: '/categories/expense/create',
                 title: 'Создание категории расходов',
                 filePathTemplate: '/templates/pages/categories/expense-create.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new ExpenseCreate(this.openNewRoute.bind(this));
-                    new Layout();
+                    new CategoriesCreate(this.openNewRoute.bind(this), 'expense');
                 }
             },
-            // {
-            //     route: '/categories/income/edit',
-            //     title: 'Редактирование категории доходов',
-            //     filePathTemplate: '/templates/pages/categories/income-edit.html',
-            //     useLayout: '/templates/layout.html',
-            //     load: () => {
-            //         new IncomeEdit();
-            //         new Layout();
-            //     }
-            // },
+            {
+                route: '/categories/expense/delete',
+                load: () => {
+                    new CategoriesDelete(this.openNewRoute.bind(this), 'expense');
+                }
+            },
+            {
+                route: '/categories/income',
+                title: 'Доходы',
+                filePathTemplate: '/templates/pages/categories/income.html',
+                useLayout: '/templates/layout.html',
+                load: () => {
+                    new Categories(this.openNewRoute.bind(this), 'income');
+                }
+            },
+            {
+                route: '/categories/income/edit',
+                title: 'Редактирование категории доходов',
+                filePathTemplate: '/templates/pages/categories/income-edit.html',
+                useLayout: '/templates/layout.html',
+                load: () => {
+                    new CategoriesEdit(this.openNewRoute.bind(this), 'income');
+                }
+            },
             {
                 route: '/categories/income/create',
                 title: 'Создание категории доходов',
                 filePathTemplate: '/templates/pages/categories/income-create.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new IncomeCreate(this.openNewRoute.bind(this));
-                    new Layout();
+                    new CategoriesCreate(this.openNewRoute.bind(this), 'income');
                 }
             },
-
-
+            {
+                route: '/categories/income/delete',
+                load: () => {
+                    new CategoriesDelete(this.openNewRoute.bind(this), 'income');
+                }
+            },
         ]
     }
 
@@ -181,6 +198,7 @@ export class Router {
         if (element) {
             e.preventDefault();
 
+            const currentRoute = window.location.pathname;
             const url = element.href.replace(window.location.origin, '')
             if (!url || url === '/#' || url.startsWith('javascript: void(0)')) {
                 return;
@@ -198,6 +216,11 @@ export class Router {
                     document.querySelector(`link[href='/css/${style}']`).remove();
                 })
             }
+            if (currentRoute.scripts && currentRoute.scripts.length > 0) {
+                currentRoute.scripts.forEach(script => {
+                    document.querySelector(`script[src='/js/${script}']`).remove();
+                })
+            }
             if (currentRoute.unload && typeof currentRoute.unload === 'function') {
                 currentRoute.unload();
             }
@@ -208,22 +231,37 @@ export class Router {
         if (newRoute) {
             if (newRoute.styles && newRoute.styles.length > 0) {
                 newRoute.styles.forEach(style => {
-                    const link = document.createElement('link');
-                    link.rel = 'stylesheet';
-                    link.href = '/css/' + style;
-                    document.head.insertBefore(link, this.firstScriptElement);
+                    FileUtils.loadPageStyle('/css/' + style, this.firstScriptElement);
                 })
             }
+            if (newRoute.scripts && newRoute.scripts.length > 0) {
+                for (const script of newRoute.scripts) {
+                    await FileUtils.loadPageScript('/js/' + script);
+                }
+            }
+
             if (newRoute.title) {
                 this.titlePageElement.innerText = newRoute.title + ' | Lumincoin Finance';
             }
 
             if (newRoute.filePathTemplate) {
-                document.body.className='';
+                document.body.className = '';
                 let contentBlock = this.contentPageElement;
                 if (newRoute.useLayout) {
                     this.contentPageElement.innerHTML = await fetch(newRoute.useLayout).then(response => response.text());
+                    new Layout(this.openNewRoute.bind(this));
                     contentBlock = document.getElementById('content-layout');
+                    this.activateMenuItem(newRoute);
+
+                    this.userNameElement = document.getElementById('user-name');
+                    let userInfo = AuthUtils.getAuthInfo(AuthUtils.userInfoKey);
+                    if (userInfo) {
+                        userInfo = JSON.parse(userInfo);
+                        if (userInfo.lastName && userInfo.name) {
+                            this.userName = userInfo.lastName + ' ' + userInfo.name;
+                        }
+                    }
+                    this.userNameElement.innerText = this.userName;
                 }
                 contentBlock.innerHTML = await fetch(newRoute.filePathTemplate).then(response => response.text());
             }
@@ -237,5 +275,24 @@ export class Router {
             history.pushState({}, '', '/');
             await this.activateRoute();
         }
+    }
+
+    activateMenuItem(route) {
+        const accordionBtn = document.getElementsByClassName('accordion-button')[0];
+        const accordionCollapse = document.getElementsByClassName('accordion-collapse')[0];
+        document.querySelectorAll('.sidebar .nav-link').forEach(item => {
+            const href = item.getAttribute('href');
+            if ((route.route.includes(href) && href !== '/') || (route.route === href && href === '/')) {
+                item.classList.add('active');
+                if (route.route.includes('categories')) {
+                    accordionBtn.classList.add('active');
+                    accordionBtn.classList.remove('collapsed');
+                    accordionCollapse.classList.add('show');
+                }
+                ;
+            } else {
+                item.classList.remove('active');
+            }
+        })
     }
 }
