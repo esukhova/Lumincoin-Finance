@@ -27,7 +27,7 @@ export class CategoriesCreate {
             return response.redirect ? this.openNewRoute(response.redirect) : null;
         }
 
-        for (let i = 0; i < response.length; i++) {
+        for (let i = 0; i < response.categories.length; i++) {
             this.existingCategoriesTitles.push(response.categories[i].title.toLowerCase());
         }
     }
